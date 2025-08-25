@@ -1,0 +1,42 @@
+name: medlitbot-infrastructure
+runtime: python
+description: MedLitBot infrastructure on Hetzner Cloud with minimal resources
+
+config:
+  # Server configuration
+  server_type:
+    description: "Hetzner server type (cax11 for minimal ARM resources)"
+    default: "cax11"
+  
+  server_location:
+    description: "Hetzner datacenter location"
+    default: "nbg1"
+  
+  # Storage configuration
+  volume_size:
+    description: "Block storage volume size in GB"
+    default: 20
+  
+  # Environment configuration
+  environment:
+    description: "Deployment environment (dev/staging/prod)"
+    default: "prod"
+  
+  # Domain configuration
+  domain_name:
+    description: "Domain name for the application (optional)"
+    default: ""
+  
+  # Database configuration
+  postgres_version:
+    description: "PostgreSQL version"
+    default: "15"
+    
+  # Application configuration
+  django_secret_key:
+    description: "Django secret key"
+    secret: true
+  
+  allowed_hosts:
+    description: "Django allowed hosts"
+    default: "*"

@@ -1,0 +1,45 @@
+# Large model files and training outputs
+media/trained_models/*.pkl
+media/trained_models/*_model/
+media/trained_models/*.safetensors
+media/trained_models/
+db.sqlite3
+logs/
+training_output/
+logs/*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Model checkpoints
+*.pt
+*.bin
+*.pth
+
+# Large data files
+*.csv
+!test*.csv
+
+# Environment files
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+nodel_modules/
+nodel_modules1/
+
+# Build artifacts and static files
+frontend/dist/
+frontend/node_modules/
+staticfiles/
+node_modules/
+

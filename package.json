@@ -1,0 +1,42 @@
+{
+  "name": "medlitbot",
+  "version": "1.0.0",
+  "description": "Medical Literature AI Classification System - Full Stack",
+  "private": true,
+  "scripts": {
+    "dev": "./dev-server.sh",
+    "dev:open": "./dev-server.sh --open",
+    "dev:host": "./dev-server.sh --host",
+    "dev:clean": "./dev-server.sh --clean",
+    "build": "./build-frontend.sh",
+    "build:fast": "./build-frontend.sh --fast",
+    "build:watch": "./build-frontend.sh --watch",
+    "preview": "./build-frontend.sh --preview",
+    "check": "./build-frontend.sh --check-only",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "uv pip install -r requirements.txt",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "clean": "cd frontend && npm run clean",
+    "lint": "cd frontend && npm run lint",
+    "format": "cd frontend && npm run format",
+    "type-check": "cd frontend && npm run type-check",
+    "backend": "source .venv/bin/activate && python manage.py runserver",
+    "migrate": "source .venv/bin/activate && python manage.py migrate",
+    "test:frontend": "cd frontend && npm run test",
+    "help": "echo '\n🤖 MedLitBot Commands:\n  npm run dev         - Start frontend dev server\n  npm run build       - Production build\n  npm run backend     - Start Django backend\n  npm run install:all - Install all dependencies\n  make help           - See all Makefile commands\n'"
+  },
+  "keywords": [
+    "medical-ai",
+    "django",
+    "vue3",
+    "typescript",
+    "machine-learning",
+    "biobert",
+    "clinical-nlp"
+  ],
+  "author": "MedLitBot Team",
+  "license": "MIT",
+  "workspaces": [
+    "frontend"
+  ]
+}

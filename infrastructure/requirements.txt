@@ -1,0 +1,2 @@
+pulumi>=3.90.0
+pulumi-hcloud>=1.17.0
