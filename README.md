@@ -15,18 +15,23 @@ cd medlitbot
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Run the System
+### 2️⃣ Start the Backend System
 ```bash
-# For M1/M2 Macs (recommended for Apple Silicon)
+# For M1/M2 Macs (Apple Silicon optimized)
 ./commands/start_m1.sh
 
-# For other systems
+# For Intel/AMD systems and Linux
+./commands/start.sh
+```
+
+### 3️⃣ Start the Frontend (in a new terminal)
+```bash
 ./commands/dev-server.sh
 ```
 
-### 3️⃣ Open & Explore
+### 4️⃣ Open & Explore
 - **Frontend**: http://localhost:3000 (Modern Vue.js interface)
-- **API Docs**: http://localhost:8000/api/docs (Interactive Swagger UI)
+- **API Docs**: http://localhost:8000/api/docs (Interactive Swagger UI)  
 - **Admin**: http://localhost:8000/admin (Django admin interface)
 
 ## 🎯 What's Included - Ready to Use!
@@ -50,18 +55,25 @@ pip install -r requirements.txt
 
 ## 🖥️ System Requirements
 
-### **M1/M2 Mac Users** (Recommended Setup)
-Use `./commands/start_m1.sh` for optimal performance on Apple Silicon:
-- Optimized for M1/M2 processors
-- Uses MPS (Metal Performance Shaders) acceleration
+### **M1/M2 Mac Users** (Apple Silicon)
+Use `./commands/start_m1.sh` for optimal backend performance:
+- Optimized for M1/M2 processors with MPS acceleration
 - Memory-efficient settings for MacBook development
-- Automatic Redis and Celery configuration
+- Single-threaded Celery configuration for stability
+- Uses SQLite for simplified development
 
-### **Other Systems**
-Use `./commands/dev-server.sh` for standard setup:
+### **Intel/AMD Systems & Linux**
+Use `./commands/start.sh` for standard backend setup:
 - Works on Linux, Windows, Intel Macs
-- Standard CPU-based training
+- Multi-threaded processing for better performance
+- Standard CPU-based training and inference
 - Automatic dependency detection
+
+### **Frontend Development**
+Both system types use `./commands/dev-server.sh` for Vue.js frontend:
+- Modern Vue 3 + TypeScript development server
+- Hot module replacement for fast development
+- Automatic browser refresh on changes
 
 ## 🚀 Usage Examples
 
@@ -100,10 +112,27 @@ curl -X POST http://localhost:8000/api/classify/ \
 
 All scripts are organized in the `commands/` folder:
 
-- **`start_m1.sh`** - M1/M2 Mac optimized startup (recommended for Apple Silicon)
-- **`dev-server.sh`** - Standard development server
+### **Backend System Startup**
+- **`start_m1.sh`** - Complete system for M1/M2 Macs (Django + Celery, Apple Silicon optimized)
+- **`start.sh`** - Complete system for Intel/AMD/Linux (Django + Celery, standard config)
+
+### **Frontend Development**  
+- **`dev-server.sh`** - Vue.js development server with hot reload
+
+### **Build & Setup**
 - **`build-frontend.sh`** - Build Vue.js frontend for production
 - **`frontend_setup.sh`** - Set up and build frontend dependencies
+
+### **Typical Workflow**
+```bash
+# Terminal 1: Start backend
+./commands/start_m1.sh        # OR ./commands/start.sh
+
+# Terminal 2: Start frontend  
+./commands/dev-server.sh
+
+# Visit http://localhost:3000 for full system
+```
 
 ## 🔧 Advanced Setup
 
@@ -153,4 +182,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **🎯 Ready to classify medical literature with AI?**  
-Run `./commands/start_m1.sh` (M1/M2 Mac) or `./commands/dev-server.sh` and start exploring at http://localhost:3000
+Run `./commands/start_m1.sh` (M1/M2 Mac) or `./commands/start.sh` (other systems), then `./commands/dev-server.sh` and start exploring at http://localhost:3000
