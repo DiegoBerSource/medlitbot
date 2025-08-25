@@ -1,9 +1,9 @@
-# Large model files and training outputs
-media/trained_models/*.pkl
-media/trained_models/*_model/
-media/trained_models/*.safetensors
-media/trained_models/
-db.sqlite3
+# Large model files and training outputs (keeping pretrained models for demo)
+# media/trained_models/*.pkl
+# media/trained_models/*_model/
+# media/trained_models/*.safetensors - now tracked by Git LFS
+# media/trained_models/
+# db.sqlite3 - keeping for demo data
 logs/
 training_output/
 logs/*.log
