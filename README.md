@@ -199,12 +199,54 @@ This system demonstrates:
 - **Production Deployment**: Docker, infrastructure as code
 - **Real-time AI**: WebSocket integration for live updates
 
+## 🏗️ System Architecture
+
+### 📊 Complete Architecture Overview
+
+![System Architecture](diagrams/png/01-system-architecture.png)
+
+**[🔍 View Interactive Diagrams](diagrams/view-diagrams.html)** | **[📁 All Diagram Files](diagrams/)**
+
+### 🎯 Key Architecture Components
+
+#### **🌐 Frontend Layer (Vue.js)**
+- Vue 3 + TypeScript with PWA support
+- Real-time WebSocket integration
+- Chart.js visualizations for analytics
+- Responsive design with TailwindCSS
+
+#### **🏭 Backend Services**
+- **Django Core (Port 8000)**: REST API, Admin, WebSocket support
+- **Optional Analytics (Port 8050)**: Advanced Plotly dashboards
+- **Modular Apps**: Classification, Dataset Management, Analytics
+
+#### **🧠 Machine Learning Layer**
+- **BERT Models**: BioBERT, ClinicalBERT, SciBERT, PubMedBERT
+- **Google Gemma 2B**: Large language model for advanced classification
+- **Traditional ML**: SVM, Random Forest, Logistic Regression
+- **Hybrid Ensemble**: Combined models for optimal performance
+
+#### **⚙️ Processing & Data**
+- **Celery Workers**: Asynchronous task processing
+- **Multiple Queues**: Training, Prediction, Dataset Processing
+- **Data Storage**: SQLite/PostgreSQL + Redis caching
+- **File Management**: Model artifacts, datasets, static assets
+
+### 🔄 Process Flow Diagram
+
+![Process Flow](diagrams/png/02-process-flow.png)
+
+### 🧠 Technology Stack
+
+![Technology Stack](diagrams/png/03-technology-stack.png)
+
 ## 📖 Documentation
 
 - **[Quick Start Guide](docs/QUICK_START.md)** - Get running in 5 minutes
 - **[Architecture Guide](docs/ARCHITECTURE_GUIDE.md)** - System design overview
 - **[M1 Mac Setup](docs/M1_MAC_TRAINING_GUIDE.md)** - Apple Silicon optimization
 - **[API Documentation](http://localhost:8000/api/docs)** - Interactive Swagger UI (when running)
+- **[System Diagrams](diagrams/)** - Complete architecture diagrams
 
 ## 🤝 Contributing
 

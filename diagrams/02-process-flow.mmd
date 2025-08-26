@@ -1,0 +1,102 @@
+sequenceDiagram
+    participant Doc as 👨‍⚕️ Médico/Investigador
+    participant UI as 🌐 Vue.js Frontend
+    participant API as 🔌 Django API
+    participant Celery as ⚙️ Celery Worker
+    participant ML as 🧠 ML Engine
+    participant DB as 💾 Database
+    participant Storage as 📁 File Storage
+    participant WS as 🔄 WebSocket
+
+    %% Dataset Upload and Processing
+    Note over Doc,WS: 📊 Dataset Management Flow
+    Doc->>UI: Upload medical literature dataset
+    UI->>API: POST /api/datasets/
+    API->>Storage: Save CSV/JSON file
+    API->>Celery: Queue dataset processing task
+    Celery->>ML: Validate & preprocess data
+    ML->>DB: Save dataset metadata
+    ML->>WS: Broadcast processing complete
+    WS->>UI: Update dataset status
+    UI->>Doc: Show dataset ready for training
+
+    %% Model Training Flow
+    Note over Doc,WS: 🏋️ Model Training Flow
+    Doc->>UI: Create new model (BERT/Gemma/Traditional)
+    UI->>API: POST /api/models/
+    API->>DB: Create model record
+    API->>Celery: Queue training task
+    
+    alt BERT Model Training
+        Celery->>ML: Load BioBERT/ClinicalBERT
+        ML->>ML: Fine-tune on medical literature
+        ML->>Storage: Save .safetensors model
+    else Traditional ML Training
+        Celery->>ML: Extract TF-IDF features
+        ML->>ML: Train SVM/RandomForest
+        ML->>Storage: Save .pkl model
+    else Gemma Model Training
+        Celery->>ML: Load Gemma 2B model
+        ML->>ML: Fine-tune with medical data
+        ML->>Storage: Save quantized model
+    end
+    
+    ML->>DB: Update training metrics
+    ML->>WS: Broadcast training progress
+    WS->>UI: Real-time progress updates
+    UI->>Doc: Show training completion
+
+    %% Classification Process
+    Note over Doc,WS: 🔮 Classification Flow
+    Doc->>UI: Input article (title + abstract)
+    UI->>API: POST /api/classify/
+    
+    alt Real-time Classification
+        API->>ML: Load trained model
+        ML->>ML: Tokenize medical text
+        ML->>ML: Generate predictions
+        ML->>API: Return classification results
+        API->>UI: JSON response with domains
+    else Batch Classification
+        API->>Celery: Queue batch prediction
+        Celery->>ML: Process multiple articles
+        ML->>Storage: Save batch results
+        ML->>WS: Broadcast batch complete
+        WS->>UI: Download results link
+    end
+    
+    UI->>Doc: Display medical domains & confidence
+
+    %% Analytics and Monitoring
+    Note over Doc,WS: 📈 Analytics Flow
+    Doc->>UI: View model performance
+    UI->>API: GET /api/models/{id}/metrics
+    API->>DB: Fetch training metrics
+    API->>UI: Return confusion matrix, F1-scores
+    UI->>UI: Render Chart.js visualizations
+    UI->>Doc: Show performance dashboard
+
+    %% Model Comparison
+    Note over Doc,WS: 🔍 Model Comparison Flow
+    Doc->>UI: Compare multiple models
+    UI->>API: GET /api/models/compare
+    API->>DB: Fetch all model metrics
+    API->>UI: Return comparison data
+    UI->>UI: Generate comparison charts
+    UI->>Doc: Display model rankings
+
+    %% Hyperparameter Optimization
+    Note over Doc,WS: ⚙️ Hyperparameter Optimization
+    Doc->>UI: Start hyperparameter tuning
+    UI->>API: POST /api/models/optimize
+    API->>Celery: Queue optimization task
+    loop Hyperparameter Search
+        Celery->>ML: Train with different parameters
+        ML->>DB: Log trial results
+        ML->>WS: Broadcast trial progress
+        WS->>UI: Update optimization status
+    end
+    ML->>Storage: Save best model
+    ML->>WS: Optimization complete
+    WS->>UI: Show best parameters
+    UI->>Doc: Display optimized model

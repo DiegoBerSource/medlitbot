@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedLitBot Architecture Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+        }
+        
+        .diagram-section {
+            margin-bottom: 60px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 40px;
+        }
+        
+        .diagram-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .diagram-title {
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        
+        .diagram-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .mermaid {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .footer {
+            text-align: center;
+            color: #95a5a6;
+            font-size: 14px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 30px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 MedLitBot Architecture Diagrams</h1>
+        <p class="subtitle">Medical Literature AI Classifier - System Design Overview</p>
+        
+        <div class="warning">
+            <strong>📝 Nota:</strong> Si los diagramas no se cargan correctamente, asegúrate de tener conexión a Internet ya que utiliza Mermaid CDN.
+        </div>
+
+        <!-- Diagram 1: System Architecture -->
+        <div class="diagram-section">
+            <h2 class="diagram-title">📊 1. System Architecture</h2>
+            <p class="diagram-description">Arquitectura completa del sistema mostrando todas las capas, componentes y sus interacciones.</p>
+            
+            <div class="mermaid">
+graph TD
+    %% Users and External Interfaces
+    U1["👨‍⚕️ Médicos/Investigadores"]
+    U2["👨‍💼 Administradores IT"]
+    U3["🔗 External APIs<br/>(HuggingFace, etc.)"]
+
+    %% Frontend Layer
+    subgraph "🌐 Frontend Layer (Vue.js)"
+        VUE["Vue 3 + TypeScript<br/>📱 PWA Support<br/>🎨 TailwindCSS"]
+        
+        subgraph "Frontend Components"
+            COMP1["📊 Analytics Views"]
+            COMP2["🤖 Classification UI"]
+            COMP3["📁 Dataset Management"]
+            COMP4["⚙️ Model Training"]
+            COMP5["📈 Real-time Dashboard"]
+        end
+        
+        subgraph "State Management"
+            PINIA["Pinia Stores<br/>• Training Store<br/>• Models Store<br/>• Dataset Store<br/>• WebSocket Store"]
+        end
+        
+        subgraph "Visualization"
+            VIZ["Chart.js<br/>• Performance Metrics<br/>• Confusion Matrix<br/>• Model Comparison"]
+        end
+    end
+
+    %% API Gateway Layer
+    subgraph "🌉 API Layer"
+        NGINX["Nginx Reverse Proxy<br/>Port Routing & Load Balancing"]
+    end
+
+    %% Backend Services
+    subgraph "🏭 Backend Services"
+        
+        subgraph "Django Core (Port 8000)"
+            DJANGO["Django 5.2<br/>• Django Ninja API<br/>• Admin Interface<br/>• WebSocket Support"]
+            
+            subgraph "Django Apps"
+                API_APP["🔌 API App<br/>REST Endpoints"]
+                CLASS_APP["🤖 Classification App<br/>ML Model Management"]
+                DATASET_APP["📊 Dataset Management<br/>Data Processing"]
+                DASH_APP["📈 Dashboard App<br/>Analytics Views"]
+            end
+        end
+        
+        subgraph "Optional Analytics (Port 8050)"
+            PLOTLY["Dash + Plotly<br/>Advanced Analytics<br/>Real-time Charts"]
+        end
+    end
+
+    %% ML/AI Layer
+    subgraph "🧠 Machine Learning Layer"
+        
+        subgraph "Model Types"
+            BERT["🏥 BERT Models<br/>• BioBERT<br/>• ClinicalBERT<br/>• SciBERT<br/>• PubMedBERT"]
+            GEMMA["⚡ Google Gemma 2B<br/>Large Language Model"]
+            TRAD["📊 Traditional ML<br/>• SVM<br/>• Random Forest<br/>• Logistic Regression"]
+            HYBRID["🔄 Hybrid Ensemble<br/>Combined Models"]
+        end
+        
+        subgraph "ML Pipeline"
+            TRAIN["🏋️ Model Training<br/>Hyperparameter Optimization"]
+            PRED["🔮 Prediction Engine<br/>Multi-label Classification"]
+            EVAL["📏 Model Evaluation<br/>Metrics & Validation"]
+        end
+    end
+
+    %% Task Processing
+    subgraph "⚙️ Task Processing Layer"
+        CELERY["Celery Workers<br/>Asynchronous Tasks"]
+        
+        subgraph "Task Queues"
+            Q1["🏋️ Training Queue<br/>Model Training Jobs"]
+            Q2["🔮 Prediction Queue<br/>Classification Tasks"]
+            Q3["📊 Processing Queue<br/>Dataset Processing"]
+        end
+    end
+
+    %% Data Layer
+    subgraph "💾 Data Layer"
+        
+        subgraph "Databases"
+            SQLITE["SQLite (Development)<br/>PostgreSQL (Production)<br/>• Models Metadata<br/>• Training Jobs<br/>• User Sessions"]
+        end
+        
+        subgraph "File Storage"
+            MEDIA["Media Storage<br/>• Trained Models (.pkl, .safetensors)<br/>• Datasets (CSV, JSON)<br/>• Model Artifacts"]
+            STATIC["Static Files<br/>• Frontend Assets<br/>• CSS, JS, Images"]
+        end
+        
+        subgraph "Cache & Sessions"
+            REDIS["Redis (Optional)<br/>• Task Broker<br/>• WebSocket Channels<br/>• Cache Layer<br/>• Session Storage"]
+        end
+    end
+
+    %% Real-time Communication
+    subgraph "🔄 Real-time Layer"
+        WS["WebSocket Channels<br/>• Training Progress<br/>• Live Updates<br/>• Notifications"]
+    end
+
+    %% Infrastructure
+    subgraph "🏗️ Infrastructure Layer"
+        DOCKER["Docker Containers<br/>• App Container<br/>• Database Container<br/>• Redis Container"]
+        PULUMI["Pulumi IaC<br/>Cloud Deployment<br/>Infrastructure as Code"]
+    end
+
+    %% User Flow Connections
+    U1 --> VUE
+    U2 --> DJANGO
+    U3 --> API_APP
+
+    %% Frontend to Backend
+    VUE --> NGINX
+    NGINX --> DJANGO
+    NGINX --> PLOTLY
+    
+    PINIA --> WS
+    VIZ --> API_APP
+
+    %% Django Apps Connections
+    DJANGO --> API_APP
+    DJANGO --> CLASS_APP
+    DJANGO --> DATASET_APP
+    DJANGO --> DASH_APP
+
+    %% ML Pipeline
+    CLASS_APP --> BERT
+    CLASS_APP --> GEMMA
+    CLASS_APP --> TRAD
+    CLASS_APP --> HYBRID
+    
+    CLASS_APP --> TRAIN
+    CLASS_APP --> PRED
+    CLASS_APP --> EVAL
+
+    %% Task Processing
+    DJANGO --> CELERY
+    CELERY --> Q1
+    CELERY --> Q2
+    CELERY --> Q3
+    
+    Q1 --> TRAIN
+    Q2 --> PRED
+    Q3 --> DATASET_APP
+
+    %% Data Connections
+    DJANGO --> SQLITE
+    DJANGO --> MEDIA
+    DJANGO --> STATIC
+    DJANGO --> REDIS
+    
+    CELERY --> REDIS
+    WS --> REDIS
+    
+    TRAIN --> MEDIA
+    PRED --> MEDIA
+
+    %% Infrastructure
+    DOCKER --> DJANGO
+    DOCKER --> REDIS
+    DOCKER --> SQLITE
+    PULUMI --> DOCKER
+
+    %% WebSocket Real-time
+    WS --> VUE
+    TRAIN --> WS
+    PRED --> WS
+
+    %% External APIs
+    U3 --> BERT
+    U3 --> GEMMA
+
+    %% Styling
+    classDef userClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef frontendClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef backendClass fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef mlClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef dataClass fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef infraClass fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+
+    class U1,U2,U3 userClass
+    class VUE,COMP1,COMP2,COMP3,COMP4,COMP5,PINIA,VIZ frontendClass
+    class NGINX,DJANGO,API_APP,CLASS_APP,DATASET_APP,DASH_APP,PLOTLY,CELERY,Q1,Q2,Q3,WS backendClass
+    class BERT,GEMMA,TRAD,HYBRID,TRAIN,PRED,EVAL mlClass
+    class SQLITE,MEDIA,STATIC,REDIS dataClass
+    class DOCKER,PULUMI infraClass
+            </div>
+        </div>
+
+        <!-- Diagram 2: Process Flow -->
+        <div class="diagram-section">
+            <h2 class="diagram-title">🔄 2. Process Flow</h2>
+            <p class="diagram-description">Flujos de procesos detallados para las operaciones clave del sistema.</p>
+            
+            <div class="mermaid">
+sequenceDiagram
+    participant Doc as 👨‍⚕️ Médico/Investigador
+    participant UI as 🌐 Vue.js Frontend
+    participant API as 🔌 Django API
+    participant Celery as ⚙️ Celery Worker
+    participant ML as 🧠 ML Engine
+    participant DB as 💾 Database
+    participant Storage as 📁 File Storage
+    participant WS as 🔄 WebSocket
+
+    %% Dataset Upload and Processing
+    Note over Doc,WS: 📊 Dataset Management Flow
+    Doc->>UI: Upload medical literature dataset
+    UI->>API: POST /api/datasets/
+    API->>Storage: Save CSV/JSON file
+    API->>Celery: Queue dataset processing task
+    Celery->>ML: Validate & preprocess data
+    ML->>DB: Save dataset metadata
+    ML->>WS: Broadcast processing complete
+    WS->>UI: Update dataset status
+    UI->>Doc: Show dataset ready for training
+
+    %% Model Training Flow
+    Note over Doc,WS: 🏋️ Model Training Flow
+    Doc->>UI: Create new model (BERT/Gemma/Traditional)
+    UI->>API: POST /api/models/
+    API->>DB: Create model record
+    API->>Celery: Queue training task
+    
+    alt BERT Model Training
+        Celery->>ML: Load BioBERT/ClinicalBERT
+        ML->>ML: Fine-tune on medical literature
+        ML->>Storage: Save .safetensors model
+    else Traditional ML Training
+        Celery->>ML: Extract TF-IDF features
+        ML->>ML: Train SVM/RandomForest
+        ML->>Storage: Save .pkl model
+    else Gemma Model Training
+        Celery->>ML: Load Gemma 2B model
+        ML->>ML: Fine-tune with medical data
+        ML->>Storage: Save quantized model
+    end
+    
+    ML->>DB: Update training metrics
+    ML->>WS: Broadcast training progress
+    WS->>UI: Real-time progress updates
+    UI->>Doc: Show training completion
+
+    %% Classification Process
+    Note over Doc,WS: 🔮 Classification Flow
+    Doc->>UI: Input article (title + abstract)
+    UI->>API: POST /api/classify/
+    
+    alt Real-time Classification
+        API->>ML: Load trained model
+        ML->>ML: Tokenize medical text
+        ML->>ML: Generate predictions
+        ML->>API: Return classification results
+        API->>UI: JSON response with domains
+    else Batch Classification
+        API->>Celery: Queue batch prediction
+        Celery->>ML: Process multiple articles
+        ML->>Storage: Save batch results
+        ML->>WS: Broadcast batch complete
+        WS->>UI: Download results link
+    end
+    
+    UI->>Doc: Display medical domains & confidence
+
+    %% Analytics and Monitoring
+    Note over Doc,WS: 📈 Analytics Flow
+    Doc->>UI: View model performance
+    UI->>API: GET /api/models/{id}/metrics
+    API->>DB: Fetch training metrics
+    API->>UI: Return confusion matrix, F1-scores
+    UI->>UI: Render Chart.js visualizations
+    UI->>Doc: Show performance dashboard
+            </div>
+        </div>
+
+        <!-- Diagram 3: Technology Stack -->
+        <div class="diagram-section">
+            <h2 class="diagram-title">🧠 3. Technology Stack</h2>
+            <p class="diagram-description">Stack tecnológico completo y overview de capacidades.</p>
+            
+            <div class="mermaid">
+mindmap
+  root((🏥 MedLitBot<br/>Medical Literature<br/>AI Classifier))
+    🌐 Frontend Stack
+      Vue.js 3
+        TypeScript
+        Composition API
+        Pinia State Management
+      UI/UX
+        TailwindCSS
+        Responsive Design
+        PWA Support
+        Chart.js Visualizations
+      Real-time Features
+        WebSocket Integration
+        Live Training Progress
+        Instant Classifications
+    
+    🏗️ Backend Architecture
+      Django Framework
+        Django 5.2
+        Django Ninja API
+        Admin Interface
+        Channel WebSockets
+      API Design
+        RESTful Endpoints
+        Swagger Documentation
+        Authentication/Authorization
+        CORS Support
+      Modular Apps
+        Classification App
+        Dataset Management
+        Dashboard Analytics
+        API Gateway
+    
+    🧠 AI/ML Capabilities
+      Transformer Models
+        BioBERT
+        ClinicalBERT
+        SciBERT
+        PubMedBERT
+        Google Gemma 2B
+      Traditional ML
+        Support Vector Machine
+        Random Forest
+        Logistic Regression
+        TF-IDF Vectorization
+      Advanced Features
+        Multi-label Classification
+        Hyperparameter Optimization
+        Model Ensemble
+        Transfer Learning
+      Medical Domains
+        Cardiology
+        Oncology
+        Neurology
+        Radiology
+        Pathology
+        Emergency Medicine
+    
+    ⚙️ Processing Layer
+      Celery Workers
+        Asynchronous Tasks
+        Queue Management
+        Distributed Processing
+      Task Types
+        Model Training
+        Batch Predictions
+        Dataset Processing
+        Performance Evaluation
+      Scalability
+        Multiple Worker Processes
+        Task Prioritization
+        Error Handling & Retry
+    
+    💾 Data Management
+      Database
+        SQLite (Development)
+        PostgreSQL (Production)
+        Model Metadata
+        Training Metrics
+      File Storage
+        Trained Models
+        Dataset Files
+        Model Artifacts
+        Static Assets
+      Caching Layer
+        Redis (Optional)
+        Session Management
+        WebSocket Channels
+        Task Broker
+    
+    🚀 Deployment & DevOps
+      Containerization
+        Docker Compose
+        Multi-service Setup
+        Environment Configuration
+      Infrastructure as Code
+        Pulumi Deployment
+        Cloud Provisioning
+        Automated Scaling
+      Production Features
+        Nginx Load Balancing
+        SSL/TLS Security
+        Environment Management
+        Monitoring & Logging
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🏥 MedLitBot - Medical Literature AI Classifier</p>
+            <p>Creado: Diciembre 2024 | Formato: Mermaid Diagrams</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            },
+            sequence: {
+                useMaxWidth: true
+            },
+            mindmap: {
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>

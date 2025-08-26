@@ -1,0 +1,187 @@
+graph TD
+    %% Users and External Interfaces
+    U1["👨‍⚕️ Médicos/Investigadores"]
+    U2["👨‍💼 Administradores IT"]
+    U3["🔗 External APIs<br/>(HuggingFace, etc.)"]
+
+    %% Frontend Layer
+    subgraph "🌐 Frontend Layer (Vue.js)"
+        VUE["Vue 3 + TypeScript<br/>📱 PWA Support<br/>🎨 TailwindCSS"]
+        
+        subgraph "Frontend Components"
+            COMP1["📊 Analytics Views"]
+            COMP2["🤖 Classification UI"]
+            COMP3["📁 Dataset Management"]
+            COMP4["⚙️ Model Training"]
+            COMP5["📈 Real-time Dashboard"]
+        end
+        
+        subgraph "State Management"
+            PINIA["Pinia Stores<br/>• Training Store<br/>• Models Store<br/>• Dataset Store<br/>• WebSocket Store"]
+        end
+        
+        subgraph "Visualization"
+            VIZ["Chart.js<br/>• Performance Metrics<br/>• Confusion Matrix<br/>• Model Comparison"]
+        end
+    end
+
+    %% API Gateway Layer
+    subgraph "🌉 API Layer"
+        NGINX["Nginx Reverse Proxy<br/>Port Routing & Load Balancing"]
+    end
+
+    %% Backend Services
+    subgraph "🏭 Backend Services"
+        
+        subgraph "Django Core (Port 8000)"
+            DJANGO["Django 5.2<br/>• Django Ninja API<br/>• Admin Interface<br/>• WebSocket Support"]
+            
+            subgraph "Django Apps"
+                API_APP["🔌 API App<br/>REST Endpoints"]
+                CLASS_APP["🤖 Classification App<br/>ML Model Management"]
+                DATASET_APP["📊 Dataset Management<br/>Data Processing"]
+                DASH_APP["📈 Dashboard App<br/>Analytics Views"]
+            end
+        end
+        
+        subgraph "Optional Analytics (Port 8050)"
+            PLOTLY["Dash + Plotly<br/>Advanced Analytics<br/>Real-time Charts"]
+        end
+    end
+
+    %% ML/AI Layer
+    subgraph "🧠 Machine Learning Layer"
+        
+        subgraph "Model Types"
+            BERT["🏥 BERT Models<br/>• BioBERT<br/>• ClinicalBERT<br/>• SciBERT<br/>• PubMedBERT"]
+            GEMMA["⚡ Google Gemma 2B<br/>Large Language Model"]
+            TRAD["📊 Traditional ML<br/>• SVM<br/>• Random Forest<br/>• Logistic Regression"]
+            HYBRID["🔄 Hybrid Ensemble<br/>Combined Models"]
+        end
+        
+        subgraph "ML Pipeline"
+            TRAIN["🏋️ Model Training<br/>Hyperparameter Optimization"]
+            PRED["🔮 Prediction Engine<br/>Multi-label Classification"]
+            EVAL["📏 Model Evaluation<br/>Metrics & Validation"]
+        end
+    end
+
+    %% Task Processing
+    subgraph "⚙️ Task Processing Layer"
+        CELERY["Celery Workers<br/>Asynchronous Tasks"]
+        
+        subgraph "Task Queues"
+            Q1["🏋️ Training Queue<br/>Model Training Jobs"]
+            Q2["🔮 Prediction Queue<br/>Classification Tasks"]
+            Q3["📊 Processing Queue<br/>Dataset Processing"]
+        end
+    end
+
+    %% Data Layer
+    subgraph "💾 Data Layer"
+        
+        subgraph "Databases"
+            SQLITE["SQLite (Development)<br/>PostgreSQL (Production)<br/>• Models Metadata<br/>• Training Jobs<br/>• User Sessions"]
+        end
+        
+        subgraph "File Storage"
+            MEDIA["Media Storage<br/>• Trained Models (.pkl, .safetensors)<br/>• Datasets (CSV, JSON)<br/>• Model Artifacts"]
+            STATIC["Static Files<br/>• Frontend Assets<br/>• CSS, JS, Images"]
+        end
+        
+        subgraph "Cache & Sessions"
+            REDIS["Redis (Optional)<br/>• Task Broker<br/>• WebSocket Channels<br/>• Cache Layer<br/>• Session Storage"]
+        end
+    end
+
+    %% Real-time Communication
+    subgraph "🔄 Real-time Layer"
+        WS["WebSocket Channels<br/>• Training Progress<br/>• Live Updates<br/>• Notifications"]
+    end
+
+    %% Infrastructure
+    subgraph "🏗️ Infrastructure Layer"
+        DOCKER["Docker Containers<br/>• App Container<br/>• Database Container<br/>• Redis Container"]
+        PULUMI["Pulumi IaC<br/>Cloud Deployment<br/>Infrastructure as Code"]
+    end
+
+    %% User Flow Connections
+    U1 --> VUE
+    U2 --> DJANGO
+    U3 --> API_APP
+
+    %% Frontend to Backend
+    VUE --> NGINX
+    NGINX --> DJANGO
+    NGINX --> PLOTLY
+    
+    PINIA --> WS
+    VIZ --> API_APP
+
+    %% Django Apps Connections
+    DJANGO --> API_APP
+    DJANGO --> CLASS_APP
+    DJANGO --> DATASET_APP
+    DJANGO --> DASH_APP
+
+    %% ML Pipeline
+    CLASS_APP --> BERT
+    CLASS_APP --> GEMMA
+    CLASS_APP --> TRAD
+    CLASS_APP --> HYBRID
+    
+    CLASS_APP --> TRAIN
+    CLASS_APP --> PRED
+    CLASS_APP --> EVAL
+
+    %% Task Processing
+    DJANGO --> CELERY
+    CELERY --> Q1
+    CELERY --> Q2
+    CELERY --> Q3
+    
+    Q1 --> TRAIN
+    Q2 --> PRED
+    Q3 --> DATASET_APP
+
+    %% Data Connections
+    DJANGO --> SQLITE
+    DJANGO --> MEDIA
+    DJANGO --> STATIC
+    DJANGO --> REDIS
+    
+    CELERY --> REDIS
+    WS --> REDIS
+    
+    TRAIN --> MEDIA
+    PRED --> MEDIA
+
+    %% Infrastructure
+    DOCKER --> DJANGO
+    DOCKER --> REDIS
+    DOCKER --> SQLITE
+    PULUMI --> DOCKER
+
+    %% WebSocket Real-time
+    WS --> VUE
+    TRAIN --> WS
+    PRED --> WS
+
+    %% External APIs
+    U3 --> BERT
+    U3 --> GEMMA
+
+    %% Styling
+    classDef userClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef frontendClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef backendClass fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef mlClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef dataClass fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef infraClass fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+
+    class U1,U2,U3 userClass
+    class VUE,COMP1,COMP2,COMP3,COMP4,COMP5,PINIA,VIZ frontendClass
+    class NGINX,DJANGO,API_APP,CLASS_APP,DATASET_APP,DASH_APP,PLOTLY,CELERY,Q1,Q2,Q3,WS backendClass
+    class BERT,GEMMA,TRAD,HYBRID,TRAIN,PRED,EVAL mlClass
+    class SQLITE,MEDIA,STATIC,REDIS dataClass
+    class DOCKER,PULUMI infraClass
