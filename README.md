@@ -31,8 +31,14 @@ pip install -r requirements.txt
 
 ### 4️⃣ Open & Explore
 - **Frontend**: http://localhost:3000 (Modern Vue.js interface)
-- **API Docs**: http://localhost:8000/api/docs (Interactive Swagger UI)  
-- **Admin**: http://localhost:8000/admin (Django admin interface)
+- **API Docs**: http://127.0.0.1:8000/api/docs (Interactive Swagger UI)  
+- **Admin**: http://127.0.0.1:8000/admin/ (Django admin interface)
+
+### 🔑 Demo Admin Access
+```
+Username: demo
+Password: demo123
+```
 
 ## 🎯 What's Included - Ready to Use!
 
@@ -132,6 +138,39 @@ All scripts are organized in the `commands/` folder:
 ./commands/dev-server.sh
 
 # Visit http://localhost:3000 for full system
+```
+
+## 🔧 Troubleshooting
+
+### Can't Access Admin or API Docs?
+
+**1. Make sure the backend is running:**
+```bash
+# Check if Django server is running on port 8000
+curl http://127.0.0.1:8000/api/docs
+```
+
+**2. Use the correct URLs:**
+- ❌ Wrong: `http://localhost:8000/admin`
+- ✅ Correct: `http://127.0.0.1:8000/admin/` (note the trailing slash)
+
+**3. Admin login credentials:**
+```
+Username: demo
+Password: demo123
+```
+
+**4. If admin still doesn't work:**
+```bash
+# Create a new superuser
+python manage.py createsuperuser
+```
+
+### Port Already in Use?
+```bash
+# Kill any existing Django processes
+pkill -f "python manage.py runserver"
+# Then restart with your preferred command
 ```
 
 ## 🔧 Advanced Setup
