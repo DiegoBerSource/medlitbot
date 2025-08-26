@@ -1,0 +1,2 @@
+import{a as s}from"./index-D07s5EKd.js";import{l as o,J as r,A as e}from"./vendor-CqXe5Vco.js";import"./utils-DWA4hw-v.js";import"./charts-DqDWejEF.js";const l={},a={class:"p-6"};function i(n,t){return r(),o("div",a,[...t[0]||(t[0]=[e("h1",{class:"text-2xl font-bold text-gray-900 mb-6"},"Profile Settings",-1),e("div",{class:"bg-white rounded-lg shadow p-6"},[e("p",{class:"text-gray-500"},"User profile settings will be implemented here")],-1)])])}const m=s(l,[["render",i]]);export{m as default};
+//# sourceMappingURL=Profile-CQv2LjJ8.js.map

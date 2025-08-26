@@ -38,7 +38,6 @@ nodel_modules/
 nodel_modules1/
 
 # Build artifacts and static files
-frontend/dist/
 frontend/node_modules/
 staticfiles/
 node_modules/

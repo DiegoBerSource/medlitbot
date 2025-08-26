@@ -32,6 +32,11 @@ git lfs install
 # Download large model files (required!)
 git lfs pull
 
+# Alternative to git lfs (optional!)
+rm media/trained_models/model_24_model/model.safetensors
+curl -L -C - -o media/trained_models/model_24_model/model.safetensors https://github.com/DiegoBerSource/medlitbot/raw/refs/heads/main/media/trained_models/model_24_model/model.safetensors
+
+
 pip install -r requirements.txt
 ```
 
