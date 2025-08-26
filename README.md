@@ -9,9 +9,29 @@ A powerful Django + Vue.js AI system that classifies medical articles into speci
 Get MedLitBot running in under 5 minutes:
 
 ### 1️⃣ Clone & Setup
+
+#### **Install Git LFS (if not already installed)**
+```bash
+# On macOS with Homebrew
+brew install git-lfs
+
+# On Ubuntu/Debian
+sudo apt install git-lfs
+
+# On other systems, visit: https://git-lfs.github.io/
+```
+
+#### **Clone Repository & Download Models**
 ```bash
 git clone https://github.com/DiegoBerSource/medlitbot.git
 cd medlitbot
+
+# Initialize Git LFS (one-time setup)
+git lfs install
+
+# Download large model files (required!)
+git lfs pull
+
 pip install -r requirements.txt
 ```
 
@@ -33,6 +53,8 @@ pip install -r requirements.txt
 - **Frontend**: http://localhost:3000 (Modern Vue.js interface)
 - **API Docs**: http://127.0.0.1:8000/api/docs (Interactive Swagger UI)  
 - **Admin**: http://127.0.0.1:8000/admin/ (Django admin interface)
+
+> **⚠️ Important**: If you see "Model file not found" errors, run `git lfs pull` to download the trained models.
 
 ### 🔑 Demo Admin Access
 ```
@@ -58,6 +80,22 @@ Password: demo123
 - Pretrained model files (traditional + BERT transformer)
 - Performance metrics and confusion matrices
 - Realistic demo database
+
+## ⚠️ Prerequisites
+
+### **Git LFS Required**
+This project uses **Git LFS** for large model files. You **must** install Git LFS:
+```bash
+# Install Git LFS first
+brew install git-lfs      # macOS
+# or: sudo apt install git-lfs   # Ubuntu/Debian
+
+# Then clone and download models
+git clone https://github.com/DiegoBerSource/medlitbot.git
+cd medlitbot
+git lfs install
+git lfs pull
+```
 
 ## 🖥️ System Requirements
 
@@ -173,6 +211,41 @@ pkill -f "python manage.py runserver"
 # Then restart with your preferred command
 ```
 
+### Model Files Not Working?
+If you see "Model file not found" or models showing as 134 bytes:
+
+#### **Install Git LFS if missing:**
+```bash
+# On macOS with Homebrew
+brew install git-lfs
+
+# On Ubuntu/Debian  
+sudo apt install git-lfs
+
+# Initialize LFS for your user (one-time)
+git lfs install
+```
+
+#### **Download the actual model files:**
+```bash
+# This downloads the actual trained models (Git LFS)
+git lfs pull
+
+# Verify models are downloaded correctly
+ls -lh media/trained_models/model_24_model/model.safetensors
+# Should show ~433MB, not 134 bytes
+```
+
+#### **Still having issues?**
+```bash
+# Check if Git LFS is working
+git lfs ls-files
+# Should show: c47aa14446 * media/trained_models/model_24_model/model.safetensors
+
+# Force re-download if needed
+git lfs pull --force
+```
+
 ## 🔧 Advanced Setup
 
 ### Custom Configuration
@@ -243,6 +316,7 @@ This system demonstrates:
 ## 📖 Documentation
 
 - **[Quick Start Guide](docs/QUICK_START.md)** - Get running in 5 minutes
+- **[Git LFS Setup](docs/GIT_LFS_SETUP.md)** - Troubleshoot model file issues
 - **[Architecture Guide](docs/ARCHITECTURE_GUIDE.md)** - System design overview
 - **[M1 Mac Setup](docs/M1_MAC_TRAINING_GUIDE.md)** - Apple Silicon optimization
 - **[API Documentation](http://localhost:8000/api/docs)** - Interactive Swagger UI (when running)

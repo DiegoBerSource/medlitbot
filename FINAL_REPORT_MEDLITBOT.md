@@ -115,14 +115,16 @@ graph TD
 #### **Available Trained Models**
 ```
 media/trained_models/
-├── model_13.pkl                    # Traditional ML model
+├── model_13.pkl                    # Traditional ML model (3.2MB)
 ├── model_24_metadata.json          # BERT metadata
 └── model_24_model/                 # Complete BERT model
     ├── config.json                 # Configuration
-    ├── model.safetensors           # Model weights
+    ├── model.safetensors           # Model weights (433MB - Git LFS)
     ├── tokenizer_config.json       # Tokenizer
     └── vocab.txt                   # Medical vocabulary
 ```
+
+> **⚠️ Important**: Large model files are managed with Git LFS. After cloning, run `git lfs pull` to download the actual trained models.
 
 #### **Documented REST API**
 - **Swagger Endpoint**: `http://localhost:8000/api/docs`
